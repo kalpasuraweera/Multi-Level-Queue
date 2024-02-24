@@ -37,12 +37,37 @@ class Queue:
                     print(f"Process with burst time {process.burst_time} and priority {self.priority} has completed.")
                 else:
                     print(f"Process with burst time {process.burst_time} and priority {self.priority} has {process.remaining_time} remaining time.")
-        elif self.priority == 1:
+        elif self.priority == 1 or self.priority == 2:
             #sort the queue by burst time
             self.queue.sort(key=lambda x: x.burst_time)
-            #run the process with the shortest burst time
-            process = self.queue.pop(0)
-            process.turnaround_time = process.waiting_time + process.burst_time
-            process.process_completed()
-            self.completedPrecesses.append(process)
-            print(f"Process with burst time {process.burst_time} and priority {self.priority} has completed.")
+            #run the process with the shortest burst time and limit run time to time_quantum
+            remaining_time = time_quantum
+            for process in self.queue:
+                if process.remaining_time <= remaining_time:
+                    process.turnaround_time = process.waiting_time + process.burst_time
+                    process.process_completed()
+                    self.completedPrecesses.append(process)
+                    self.queue.remove(process)
+                    print(f"Process with burst time {process.burst_time} and priority {self.priority} has completed.")
+                else:
+                    process.remaining_time -= remaining_time
+                    print(f"Process with burst time {process.burst_time} and priority {self.priority} has {process.remaining_time} remaining time.")
+                remaining_time -= process.remaining_time
+                if remaining_time <= 0:
+                    break
+        elif self.priority == 3:
+            #run the process in the order they were added and limit run time to time_quantum
+            remaining_time = time_quantum
+            for process in self.queue:
+                if process.remaining_time <= remaining_time:
+                    process.turnaround_time = process.waiting_time + process.burst_time
+                    process.process_completed()
+                    self.completedPrecesses.append(process)
+                    self.queue.remove(process)
+                    print(f"Process with burst time {process.burst_time} and priority {self.priority} has completed.")
+                else:
+                    process.remaining_time -= remaining_time
+                    print(f"Process with burst time {process.burst_time} and priority {self.priority} has {process.remaining_time} remaining time.")
+                remaining_time -= process.remaining_time
+                if remaining_time <= 0:
+                    break
