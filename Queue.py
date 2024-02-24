@@ -48,6 +48,8 @@ class Queue:
                     for p in self.queue:
                         if p != process:
                             p.waiting_time += process.remaining_time
+                    remaining_time -= process.remaining_time
+                    process.remaining_time = 0
                     process.turnaround_time = process.waiting_time + process.burst_time
                     process.process_completed()
                     self.completedPrecesses.append(process)
@@ -59,8 +61,8 @@ class Queue:
                         if p != process:
                             p.waiting_time += remaining_time
                     process.remaining_time -= remaining_time
+                    remaining_time = 0
                     print(f"Process with burst time {process.burst_time} and priority {self.priority} has {process.remaining_time} remaining time.")
-                remaining_time -= process.remaining_time
                 if remaining_time <= 0:
                     break
         elif self.priority == 3:
@@ -72,6 +74,8 @@ class Queue:
                     for p in self.queue:
                         if p != process:
                             p.waiting_time += process.remaining_time
+                    remaining_time -= process.remaining_time
+                    process.remaining_time = 0
                     process.turnaround_time = process.waiting_time + process.burst_time
                     process.process_completed()
                     self.completedPrecesses.append(process)
@@ -83,7 +87,7 @@ class Queue:
                         if p != process:
                             p.waiting_time += remaining_time
                     process.remaining_time -= remaining_time
+                    remaining_time = 0
                     print(f"Process with burst time {process.burst_time} and priority {self.priority} has {process.remaining_time} remaining time.")
-                remaining_time -= process.remaining_time
                 if remaining_time <= 0:
                     break

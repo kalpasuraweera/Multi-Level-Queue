@@ -47,9 +47,9 @@ if __name__ == "__main__":
     #write to csv file
     with open('data.csv', 'a') as file:
         if file.tell() == 0:
-            file.write("Priority, Burst Time, Priority, Waiting Time, Turnaround Time\n")
+            file.write("Priority, Burst Time, Waiting Time, Turnaround Time\n")
         else:
             file.write("\n")
         for queue in queues:
             for process in queue.completedPrecesses:
-                file.write(f"{queue.priority}, {process.burst_time}, {queue.priority}, {process.waiting_time}, {process.turnaround_time}\n")
+                file.write(f"{queue.priority}, {process.burst_time}, {process.waiting_time}, {process.turnaround_time}\n")
