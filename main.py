@@ -32,11 +32,12 @@ if __name__ == "__main__":
     #run the scheduling algorithms until all queues are empty
     while not all(queue.is_empty() for queue in queues):
         for queue in queues:
-            #increase waiting time of processes in other queues
-            for other_queue in queues:
-                if other_queue != queue:
-                    other_queue.increase_waiting_time(TIME_QUANTUM)
-            queue.run(TIME_QUANTUM)
+           if(len(queue.queue) > 0):
+                #increase waiting time of processes in other queues
+                for other_queue in queues:
+                    if other_queue != queue:
+                        other_queue.increase_waiting_time(TIME_QUANTUM)
+                queue.run(TIME_QUANTUM)
     
     #Show Waiting Time and Turnaround Time for each process
     print("\n### Waiting Time and Turnaround Time for each Process ###")
